@@ -1,0 +1,26 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:tailwindcss/recommended"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.html",
+        "*.blade.php"
+      ],
+      "parser": "@angular-eslint/template-parser"
+    },
+    {
+      "files": [
+        "*.ts",
+        "*.tsx",
+        "*.js"
+      ],
+      "parser": "@typescript-eslint/parser"
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id               String    @id @default(cuid())
+  name             String?
+  email            String    @unique
+  emailVerified    DateTime?
+  image            String?
+  plan             Plan      @default(FREE)
+  stripeCustomerId String?
+
+  accounts      Account[]
+  sessions      Session[]
+  Replicate     Replicate[]
+  // Optional for WebAuthn support
+  Authenticator Authenticator[]
+
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  UserApiLimit UserApiLimit[]
+}
+
+enum Plan {
+  FREE
+  PREMIUM
+}
+
+model UserApiLimit {
+  id        String   @id @default(cuid())
+  count     Int      @default(0)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @unique
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+// Optional for WebAuthn support
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, credentialID])
+}
+
+enum Services {
+  COLORIZATION
+  VINTAGE_RESTORATION
+  ULTRA_RESOLUTION
+  BACKGROUND_ERASER
+  CARTOONIFY
+  DEBLUR
+  HDR_ENHANCEMENT
+}
+
+// FREE = 5 Tokens > 0 $
+// ESSENTIAL = 25 Tokens > 4.99 $
+// PREMIUM = 150 Tokens > 19.99 $
+// PRO = 1000 Tokens > 99.99 $
+
+model Replicate {
+  id                 String   @id @default(cuid())
+  serviceName        Services @default(COLORIZATION)
+  replicateOriginal  String
+  replicateOptimized String?
+  width              String?
+  height             String?
+  slug               String   @unique @default(nanoid())
+  isFavorite         Boolean  @default(false)
+  isDemo             Boolean  @default(false)
+  fileType           String?
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId             String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
