@@ -1,5 +1,6 @@
 import { baseAuth } from "@/auth/auth";
 import { prisma } from "@/auth/prisma";
+import { checkApiLimit } from "@/lib/api-limit";
 import { toolsServices } from "@/lib/toolsList";
 import { Services } from "@prisma/client";
 import { put } from "@vercel/blob";
@@ -24,6 +25,10 @@ export async function POST(request: Request) {
       return new NextResponse("file and serviceName is required", {
         status: 400,
       });
+    }
+    const freeTrial = await checkApiLimit();
+    if (!freeTrial) {
+      return new NextResponse("Free trial has expired.", { status: 403 });
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

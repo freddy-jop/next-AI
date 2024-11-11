@@ -10,10 +10,7 @@ export const FavoriteButtonFilter = ({
   serviceName: string;
 }) => {
   const favorite = useCartStore((s) => s.favorite);
-  const filterByFavorite = () => {
-    console.log("serviceName :: ", serviceName);
-  };
-
+  console.log("serviceName", serviceName);
   return (
     <div className="flex w-full flex-col items-center justify-start py-4">
       <motion.div
@@ -24,7 +21,6 @@ export const FavoriteButtonFilter = ({
         <Button
           variant="outline"
           size="icon"
-          onClick={filterByFavorite}
           className="flex w-24 items-center rounded-full bg-slate-100 shadow-lg transition-all duration-200 ease-in-out hover:bg-pink-100"
         >
           {/* Icône ListFilter avec arrière-plan foncé */}

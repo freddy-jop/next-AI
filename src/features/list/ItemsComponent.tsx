@@ -50,7 +50,6 @@ export const ItemsComponent = ({
         <SkeletonItems />
       ) : (
         <>
-          {/* <FavoriteButtonFilter serviceName={serviceName} /> */}
           <Items replicateData={data} />
         </>
       )}

@@ -1,6 +1,7 @@
 import { baseAuth } from "@/auth/auth";
 import { prisma } from "@/auth/prisma";
 import { env } from "@/env";
+import { checkApiLimit, increaseApiLimit } from "@/lib/api-limit";
 import { chooseReplicateConfig } from "@/lib/chooseReplicateConfig";
 import { formatEnumToTitleCase } from "@/lib/formatEnumToTitleCase";
 import { Services, User } from "@prisma/client";
@@ -62,6 +63,11 @@ export async function POST(req: Request) {
       return new NextResponse("Unauthorised", { status: 401 });
     }
 
+    const freeTrial = await checkApiLimit();
+    if (!freeTrial) {
+      return new NextResponse("Free trial has expired.", { status: 403 });
+    }
+
     const user = session.user as User;
 
     const findReplicateToProcess = await prisma.replicate.findUnique({
@@ -86,6 +92,7 @@ export async function POST(req: Request) {
       const output = await replicate.run(model, {
         input: process.input,
       });
+      await increaseApiLimit();
       //Télécharger l'image à partir de l'URL output
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const imageResponse = await axios.get(output as any, {

@@ -1,4 +1,4 @@
-import { requiredCurrentUser } from "@/auth/current-user";
+import { baseAuth } from "@/auth/auth";
 import { ReplicateComponent } from "@/features/editor/ReplicateComponent";
 import type { PageParams } from "@/types/next";
 import { redirect } from "next/navigation";
@@ -8,8 +8,8 @@ export default async function RoutePage({
 }: PageParams<{ processId: string }>) {
   const { processId } = await params;
 
-  const user = await requiredCurrentUser();
-  if (!user) {
+  const session = await baseAuth();
+  if (!session) {
     redirect("/login");
   }
 

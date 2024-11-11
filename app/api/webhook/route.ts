@@ -7,7 +7,7 @@ import Stripe from "stripe";
 
 export const POST = async (req: NextRequest) => {
   const body = await req.text();
-  console.log("body ::: ", body);
+
   const stripeSignature = req.headers.get("stripe-signature");
 
   if (!stripeSignature) {
@@ -26,9 +26,10 @@ export const POST = async (req: NextRequest) => {
     console.log(err);
     return NextResponse.json({ error: "No Stripe signature" }, { status: 400 });
   }
-  console.log("event.data.object ::: ", event.data.object);
+
   // C:\Users\Fredy\NEXT\STACKS\stripe\stripe.exe listen --forward-to localhost:3000/api/webhooks/stripe
   if (event.type === "checkout.session.completed") {
+    console.log("Checkout session completed");
     const session = event.data.object as Stripe.Checkout.Session;
     const customerId = session.customer as string;
 
@@ -56,7 +57,8 @@ export const POST = async (req: NextRequest) => {
       { status: 200 }
     );
   }
-  if (event.type === "invoice.paid") {
+  if (event.type === "invoice.payment_succeeded") {
+    console.log("Invoice payment succeeded");
     const invoice = event.data.object as Stripe.Invoice;
     const customerId = invoice.customer as string;
 
@@ -79,6 +81,7 @@ export const POST = async (req: NextRequest) => {
     });
   }
   if (event.type === "customer.subscription.deleted") {
+    console.log("Subscription deleted");
     const subscription = event.data.object as Stripe.Subscription;
     const customerId = subscription.customer as string;
 

@@ -27,9 +27,9 @@ export const Payments = () => {
       <div className="container relative z-10 mx-auto px-4">
         <div className="-m-8 flex flex-wrap lg:items-center">
           {/* Plan Description */}
-          <div className="w-full p-8 md:w-1/2">
-            <div className="md:max-w-lg">
-              <h2 className="mb-8 text-4xl font-extrabold text-gray-900 md:text-5xl">
+          <div className="w-full p-8 lg:w-1/2">
+            <div className="lg:max-w-lg">
+              <h2 className="mb-8 text-4xl font-extrabold text-gray-900 lg:text-5xl">
                 Accès Complet Premium
               </h2>
               <p className="mb-6 text-lg font-medium text-gray-700">
@@ -39,8 +39,8 @@ export const Payments = () => {
             </div>
           </div>
           {/* Features & Pricing */}
-          <div className="w-full p-8 md:w-1/2">
-            <div className="mx-auto overflow-hidden rounded-3xl bg-white shadow-2xl md:max-w-md">
+          <div className="w-full p-8 lg:w-1/2">
+            <div className="mx-auto overflow-hidden rounded-3xl bg-white shadow-2xl lg:max-w-md">
               <div className="space-y-6 p-8 text-center">
                 <span className="text-sm font-semibold uppercase text-gray-500">
                   Ce que vous obtenez

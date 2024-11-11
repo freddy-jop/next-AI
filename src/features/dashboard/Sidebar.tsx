@@ -2,7 +2,7 @@
 
 import { toolsMenu } from "@/lib/toolsList";
 import { cn } from "@/lib/utils";
-import { User } from "@prisma/client";
+import { Plan, User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -56,7 +56,7 @@ export const Sidebar = ({ user }: SidebarProps) => {
           ))}
         </div>
       </div>
-      <FreeCounter apiLimitCount={0} isPro={false} />
+      {user.plan === Plan.FREE && <FreeCounter user={user} />}
     </div>
   );
 };

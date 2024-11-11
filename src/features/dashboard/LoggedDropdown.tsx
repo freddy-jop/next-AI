@@ -1,18 +1,19 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useDropdownStore } from "@/store/dropdown.store";
 import { SidebarProps } from "@/types/services";
+import { Plan } from "@prisma/client";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
-import { Check, ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
-import { SettingsButton } from "../auth/SettingsButton";
 import { SignOutButton } from "../auth/SignOutButton";
 
 export const LoggedDropdown = ({ user }: SidebarProps) => {
@@ -40,9 +41,18 @@ export const LoggedDropdown = ({ user }: SidebarProps) => {
             </div>
 
             <div className="text-left">
-              <span className="block font-semibold text-gray-300">
-                {user.name}
-              </span>
+              {user.plan === Plan.PREMIUM ? (
+                <Badge className="rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 px-4 py-1 text-sm font-semibold uppercase text-white shadow-lg shadow-indigo-500/50">
+                  {user.plan}
+                </Badge>
+              ) : (
+                <Badge
+                  className="rounded-full border-black/5 
+                        bg-gradient-to-r from-gray-50 to-gray-200 px-4 py-1 text-sm font-semibold uppercase text-slate-800 shadow-lg shadow-slate-500/50"
+                >
+                  {`${user.plan} plan`}
+                </Badge>
+              )}
             </div>
 
             {down ? (
@@ -53,42 +63,9 @@ export const LoggedDropdown = ({ user }: SidebarProps) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-80 rounded-md border-2 border-gray-400 bg-gray-900 pt-2 sm:w-80 md:w-64 lg:w-64 xl:w-64 2xl:w-64">
-          <DropdownMenuItem className="w-full py-1 outline-none hover:bg-gray-700">
-            <div className="flex w-full items-center px-2">
-              <div className="mr-3 size-8 shrink-0 overflow-hidden rounded-full bg-gradient-to-r from-cyan-500 to-sky-400">
-                {/* Image de l'utilisateur, si disponible */}
-                <div className="flex size-full flex-col items-center justify-center">
-                  <Avatar>
-                    <AvatarImage
-                      src={
-                        user.image
-                          ? user.image
-                          : `https://github.com/shadcn.png`
-                      }
-                    />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                </div>
-              </div>
-
-              {/* Texte avec deux lignes */}
-              <div className="text-left">
-                <span className="block text-sm font-semibold text-gray-300">
-                  {user.name}
-                </span>
-                <span className="block text-sm text-gray-500">{user.plan}</span>
-              </div>
-              <Check className="ml-auto size-6 text-gray-400" />
-            </div>
-          </DropdownMenuItem>
           <div className="mt-2 flex w-full flex-col items-center">
             <div className="mb-2 h-[2px] w-48 space-y-1 bg-gray-800"></div>
           </div>
-          <DropdownMenuItem className="w-full outline-none hover:bg-gray-700">
-            <div className="space-y-1">
-              <SettingsButton />
-            </div>
-          </DropdownMenuItem>
           <DropdownMenuItem className="w-full outline-none hover:bg-gray-700">
             <div className="space-y-1">
               <SignOutButton />

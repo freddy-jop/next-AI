@@ -1,7 +1,7 @@
 import { baseAuth } from "@/auth/auth";
 import { prisma } from "@/auth/prisma";
 import { MAX_FREE_COUNTS } from "@/constants";
-import { User } from "@prisma/client";
+import { Plan, User } from "@prisma/client";
 
 export const increaseApiLimit = async () => {
   const session = await baseAuth();
@@ -20,16 +20,14 @@ export const increaseApiLimit = async () => {
     where: { userId: userId },
   });
 
-  if (userApiLimit) {
-    await prisma.userApiLimit.update({
-      where: { userId: userId },
-      data: { count: userApiLimit.count + 1 },
-    });
-  } else {
-    await prisma.userApiLimit.create({
-      data: { userId: userId, count: 1 },
-    });
+  if (!userApiLimit) {
+    return new Response("User Limit is missing", { status: 400 });
   }
+
+  await prisma.userApiLimit.update({
+    where: { userId: userId },
+    data: { count: userApiLimit.count + 1 },
+  });
 };
 
 export const checkApiLimit = async () => {
@@ -51,7 +49,15 @@ export const checkApiLimit = async () => {
     },
   });
 
-  if (!userApiLimit || userApiLimit.count < MAX_FREE_COUNTS) {
+  if (!userApiLimit) {
+    return false;
+  }
+
+  if (
+    (userApiLimit.count < MAX_FREE_COUNTS && user.plan === Plan.FREE) ||
+    (userApiLimit.count < MAX_FREE_COUNTS && user.plan === Plan.PREMIUM) ||
+    user.plan === Plan.PREMIUM
+  ) {
     return true;
   } else {
     return false;

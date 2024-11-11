@@ -4,8 +4,9 @@ import { redirect } from "next/navigation";
 
 export default async function RoutePage() {
   const session = await baseAuth();
+
   if (!session) {
-    return redirect("/login");
+    redirect("/login");
   }
   return (
     <>

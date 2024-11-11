@@ -62,18 +62,21 @@ export const {
         return;
       }
 
-      console.log("Creating Stripe Customer ::: ", message);
-
+      // Create customer in Stripe dashboard
       const stripeCustomer = await stripe.customers.create({
         name: message.user.name ?? "",
         email: userEmail,
       });
 
-      console.log("stripeCustomer ::: ", stripeCustomer);
-
+      // Update customerId in User model
       await prisma.user.update({
         where: { id: userId },
         data: { stripeCustomerId: stripeCustomer.id },
+      });
+
+      // Create Counter user Limit for Free Plan
+      await prisma.userApiLimit.create({
+        data: { user: { connect: { id: userId } } },
       });
     },
   },

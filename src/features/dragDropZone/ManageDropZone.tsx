@@ -39,7 +39,7 @@ export const ManageDropZone = ({
           const result = await axios.post("/api/replicateprocess", {
             processId: slug,
           });
-          console.log("res.data/Relicate ::: ", result.data);
+
           const responseData = result.data;
           toast.success(`File Optimized successfully`);
           router.push(`/${service}/${responseData.slug}`);

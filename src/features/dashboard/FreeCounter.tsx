@@ -1,39 +1,50 @@
 "use client";
 
 import { MAX_FREE_COUNTS } from "@/constants";
+import { User } from "@prisma/client";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { motion } from "framer-motion";
 import { Zap } from "lucide-react";
 import { redirect } from "next/navigation";
-import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { LoaderEffectUpgrade } from "../loader/LoaderEffectUpgrade";
 
 type FreeCounterProps = {
-  apiLimitCount: number;
-  isPro: boolean;
+  user: User;
 };
 
-export const FreeCounter = ({
-  apiLimitCount = 0,
-  isPro = false,
-}: FreeCounterProps) => {
-  const [mounted, setMounted] = useState(false);
-  const [progress, setProgress] = useState(0);
+export const FreeCounter = ({ user }: FreeCounterProps) => {
+  const { data, isPending } = useQuery({
+    queryKey: ["apiLimit", user.id],
+    enabled: !!user.id,
+    queryFn: async () => {
+      try {
+        const result = await axios.get("/api/userapilimit", {
+          params: {
+            limitUserId: user.id,
+          },
+        });
+        return result.data;
+      } catch (err) {
+        const error = err as Error;
+        toast.error(`Error On Counter: ${error.message}`);
+        throw err; // Propagation de l'erreur pour que React Query la prenne en compte
+      }
+    },
+  });
 
-  useEffect(() => {
-    setMounted(true);
-    setProgress((apiLimitCount / MAX_FREE_COUNTS) * 100);
-  }, [apiLimitCount]);
-
-  if (!mounted || isPro) {
-    return null;
+  if (isPending) {
+    return <LoaderEffectUpgrade />;
   }
 
   return (
     <div className="relative flex w-full max-w-md items-center overflow-hidden rounded-full bg-gray-800 px-3 py-1 shadow-md">
       <motion.div
         className="absolute left-0 top-0 h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
-        style={{ width: `${progress}%` }}
+        style={{ width: `${(data.count / MAX_FREE_COUNTS) * 100}%` }}
         initial={{ width: 0 }}
-        animate={{ width: `${progress}%` }}
+        animate={{ width: `${(data.count / MAX_FREE_COUNTS) * 100}%` }}
         transition={{
           duration: 1.5,
           ease: "easeInOut",
@@ -46,14 +57,16 @@ export const FreeCounter = ({
       <div className="relative z-10 flex items-center space-x-1 text-sm font-semibold text-purple-300">
         <Zap className="size-4 text-purple-300" />
         <span>
-          {apiLimitCount} / {MAX_FREE_COUNTS}
+          {data.count} / {MAX_FREE_COUNTS}
         </span>{" "}
       </div>
 
       <div className="grow" />
 
       <motion.button
-        className="relative z-10 flex items-center space-x-1 rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 px-4 py-1 text-sm font-semibold text-white shadow-lg shadow-indigo-500/50"
+        className={`relative z-10 flex ${
+          data.count >= 3 ? "animate-bounce" : ""
+        } items-center space-x-1 rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 px-4 py-1 text-sm font-semibold text-white shadow-lg shadow-indigo-500/50`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => redirect("/payments")}

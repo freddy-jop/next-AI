@@ -1,14 +1,16 @@
-import { requiredCurrentUser } from "@/auth/current-user";
+import { baseAuth } from "@/auth/auth";
 import Navbar from "@/features/dashboard/Navbar";
 import { Sidebar } from "@/features/dashboard/Sidebar";
 import { RouteLayoutType } from "@/types/next";
+import { User } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export default async function RouteLayout({ children }: RouteLayoutType) {
-  const user = await requiredCurrentUser();
-  if (!user) {
+  const session = await baseAuth();
+  if (!session || !session?.user) {
     redirect("/login");
   }
+  const user = session.user as User;
   return (
     <div className="relative h-full">
       {/* <div className="fixed flex h-full w-72 flex-col"> */}

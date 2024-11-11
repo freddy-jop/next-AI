@@ -7,10 +7,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { GripHorizontal, LogOut, Settings } from "lucide-react";
-import Link from "next/link";
-import { signOutAction } from "../auth/auth.action";
 import { SidebarProps } from "@/types/services";
+import { GripHorizontal, LogOut } from "lucide-react";
+import { signOutAction } from "../auth/auth.action";
 
 export const MobileUserButton = ({ user }: SidebarProps) => {
   return (
@@ -26,16 +25,6 @@ export const MobileUserButton = ({ user }: SidebarProps) => {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="absolute -right-6 rounded-md border-2 border-gray-400 bg-gray-900 pt-2 sm:w-80 md:w-64 lg:w-64 xl:w-64">
-          <DropdownMenuItem className="w-full p-0">
-            <div className="w-full p-2 hover:bg-gray-700">
-              <Link href={"/settings"}>
-                <div className="flex flex-1 items-center font-semibold">
-                  <Settings className="mr-3 text-gray-400" />
-                  <span className="font-semibold text-white">Settings</span>
-                </div>
-              </Link>
-            </div>
-          </DropdownMenuItem>
           <DropdownMenuItem className="w-full p-0">
             <div className="w-full p-2 hover:bg-gray-700">
               <div
