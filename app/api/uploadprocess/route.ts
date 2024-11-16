@@ -7,6 +7,9 @@ import { Plan, Services, User } from "@prisma/client";
 import { put } from "@vercel/blob";
 import { NextResponse } from "next/server";
 
+export const maxDuration = 60; // This function can run for a maximum of 60 seconds
+export const dynamic = "force-dynamic";
+
 export async function POST(request: Request) {
   try {
     const session = await baseAuth();

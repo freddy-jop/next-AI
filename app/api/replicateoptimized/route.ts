@@ -3,6 +3,9 @@ import { prisma } from "@/auth/prisma";
 import { User } from "@prisma/client";
 import { NextResponse } from "next/server";
 
+export const maxDuration = 60; // This function can run for a maximum of 60 seconds
+export const dynamic = "force-dynamic";
+
 export async function GET(request: Request) {
   try {
     const session = await baseAuth();

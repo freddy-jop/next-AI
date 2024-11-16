@@ -11,6 +11,9 @@ import { nanoid } from "nanoid";
 import { NextResponse } from "next/server";
 import Replicate from "replicate";
 
+export const maxDuration = 60; // This function can run for a maximum of 60 seconds
+export const dynamic = "force-dynamic";
+
 const replicate = new Replicate({
   auth: env.REPLICATE_API_TOKEN,
 });

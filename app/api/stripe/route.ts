@@ -6,6 +6,9 @@ import { getServerUrl } from "@/get-server-url";
 import { stripe } from "@/stripe";
 import { User } from "@prisma/client";
 
+export const maxDuration = 60; // This function can run for a maximum of 60 seconds
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     const session = await baseAuth();

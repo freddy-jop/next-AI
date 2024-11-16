@@ -5,6 +5,9 @@ import { Plan } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
+export const maxDuration = 60; // This function can run for a maximum of 60 seconds
+export const dynamic = "force-dynamic";
+
 export const POST = async (req: NextRequest) => {
   const body = await req.text();
 
