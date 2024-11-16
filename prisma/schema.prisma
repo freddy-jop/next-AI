@@ -112,10 +112,10 @@ enum Services {
   HDR_ENHANCEMENT
 }
 
-// FREE = 5 Tokens > 0 $
-// ESSENTIAL = 25 Tokens > 4.99 $
-// PREMIUM = 150 Tokens > 19.99 $
-// PRO = 1000 Tokens > 99.99 $
+// FREE = 5 Tokens > 0 €
+// ESSENTIAL = 25 Tokens > 4.99 €
+// PREMIUM = 150 Tokens > 19.99 €
+// PRO = 1000 Tokens > 99.99 €
 
 model Replicate {
   id                 String   @id @default(cuid())

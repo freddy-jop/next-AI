@@ -70,7 +70,7 @@ export const Payments = () => {
               </div>
               <div className="rounded-b-3xl bg-gray-100 p-8 text-center">
                 <div className="text-xl font-bold text-gray-800">
-                  <span className="text-5xl">$19.99</span>
+                  <span className="text-5xl">19.99€</span>
                   <span className="text-lg text-gray-500"> /mois</span>
                 </div>
                 <p className="mt-4 text-sm text-gray-600">
