@@ -21,6 +21,7 @@ export const LoggedDropdown = ({ user }: SidebarProps) => {
     useShallow((state) => state.toggleDropdown)
   );
   const down = useDropdownStore(useShallow((state) => state.openDropdown));
+
   return (
     <div className="mb-4">
       <DropdownMenu onOpenChange={() => toggleDropdown()}>
@@ -64,7 +65,7 @@ export const LoggedDropdown = ({ user }: SidebarProps) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-80 rounded-md border-2 border-gray-400 bg-gray-900 pt-2 sm:w-80 md:w-64 lg:w-64 xl:w-64 2xl:w-64">
           <div className="mt-2 flex w-full flex-col items-center">
-            <div className="mb-2 h-[2px] w-48 space-y-1 bg-gray-800"></div>
+            <div className="mb-2 h-[2px] w-48 space-y-1 bg-gray-800" />
           </div>
           <DropdownMenuItem className="w-full outline-none hover:bg-gray-700">
             <div className="space-y-1">

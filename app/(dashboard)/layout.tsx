@@ -17,7 +17,7 @@ export default async function RouteLayout({ children }: RouteLayoutType) {
       <div className="hidden h-full md:fixed md:inset-y-0 md:flex md:w-72 md:flex-col">
         <Sidebar user={user} />
       </div>
-      {/*  */}
+
       <main className="md:pl-72">
         <div className="md:hidden lg:hidden xl:hidden  2xl:hidden">
           <Navbar user={user} />

@@ -23,7 +23,7 @@ export const Payments = () => {
     }
   };
   return (
-    <section className="relative overflow-hidden bg-gradient-to-r from-blue-50 to-cyan-100 py-14">
+    <section className="relative overflow-hidden bg-gradient-to-r from-blue-50 to-cyan-100 py-24">
       <div className="container relative z-10 mx-auto px-4">
         <div className="-m-8 flex flex-wrap lg:items-center">
           {/* Plan Description */}

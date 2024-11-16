@@ -1,6 +1,7 @@
 "use client";
 
 import { MAX_FREE_COUNTS } from "@/constants";
+import { useFreeCountStore } from "@/store/count.store";
 import { User } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -8,6 +9,7 @@ import { motion } from "framer-motion";
 import { Zap } from "lucide-react";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
+import { useShallow } from "zustand/react/shallow";
 import { LoaderEffectUpgrade } from "../loader/LoaderEffectUpgrade";
 
 type FreeCounterProps = {
@@ -15,9 +17,14 @@ type FreeCounterProps = {
 };
 
 export const FreeCounter = ({ user }: FreeCounterProps) => {
+  const counter = useFreeCountStore(useShallow((state) => state.freeCount));
+  const isMounted = useFreeCountStore(useShallow((state) => state.isMounted));
+  const updateAvailableCount = useFreeCountStore(
+    useShallow((state) => state.updateAvailableCount)
+  );
   const { data, isPending } = useQuery({
-    queryKey: ["apiLimit", user.id],
-    enabled: !!user.id,
+    queryKey: ["apiLimit", counter],
+    enabled: isMounted,
     queryFn: async () => {
       try {
         const result = await axios.get("/api/userapilimit", {
@@ -25,6 +32,7 @@ export const FreeCounter = ({ user }: FreeCounterProps) => {
             limitUserId: user.id,
           },
         });
+        updateAvailableCount(false);
         return result.data;
       } catch (err) {
         const error = err as Error;

@@ -1,6 +1,5 @@
 import { Services } from "@prisma/client";
 import {
-  Aperture,
   Edit3,
   History,
   LayoutDashboard,
@@ -9,6 +8,7 @@ import {
   Sun,
   ZoomIn,
 } from "lucide-react";
+import { formatEnumLowerString } from "./formatEnumLowerString";
 import { formatEnumToPath } from "./formatEnumToPath";
 import { formatEnumToTitleCase } from "./formatEnumToTitleCase";
 
@@ -16,6 +16,7 @@ export const toolsServices = [
   {
     id: 1,
     label: formatEnumToTitleCase(Services.COLORIZATION),
+    attachedLabel: formatEnumLowerString(Services.COLORIZATION),
     icon: Palette,
     href: formatEnumToPath(Services.COLORIZATION),
     enumValue: Services.COLORIZATION,
@@ -29,6 +30,7 @@ export const toolsServices = [
   {
     id: 2,
     label: formatEnumToTitleCase(Services.VINTAGE_RESTORATION),
+    attachedLabel: formatEnumLowerString(Services.VINTAGE_RESTORATION),
     icon: History,
     href: formatEnumToPath(Services.VINTAGE_RESTORATION),
     enumValue: Services.VINTAGE_RESTORATION,
@@ -42,6 +44,7 @@ export const toolsServices = [
   {
     id: 3,
     label: formatEnumToTitleCase(Services.ULTRA_RESOLUTION),
+    attachedLabel: formatEnumLowerString(Services.ULTRA_RESOLUTION),
     icon: ZoomIn,
     href: formatEnumToPath(Services.ULTRA_RESOLUTION),
     enumValue: Services.ULTRA_RESOLUTION,
@@ -55,6 +58,7 @@ export const toolsServices = [
   {
     id: 4,
     label: formatEnumToTitleCase(Services.BACKGROUND_ERASER),
+    attachedLabel: formatEnumLowerString(Services.BACKGROUND_ERASER),
     icon: Scissors,
     href: formatEnumToPath(Services.BACKGROUND_ERASER),
     enumValue: Services.BACKGROUND_ERASER,
@@ -68,6 +72,7 @@ export const toolsServices = [
   {
     id: 5,
     label: formatEnumToTitleCase(Services.CARTOONIFY),
+    attachedLabel: formatEnumLowerString(Services.CARTOONIFY),
     icon: Edit3,
     href: formatEnumToPath(Services.CARTOONIFY),
     enumValue: Services.CARTOONIFY,
@@ -80,20 +85,8 @@ export const toolsServices = [
   },
   {
     id: 6,
-    label: formatEnumToTitleCase(Services.DEBLUR),
-    icon: Aperture,
-    href: formatEnumToPath(Services.DEBLUR),
-    enumValue: Services.DEBLUR,
-    colorMenu: "text-teal-500",
-    colorService: "text-blue-800",
-    bgColorService: "bg-gradient-to-r from-cyan-400 to-blue-500",
-    dargAndDropTextService: `Drag your image here to start AI ${formatEnumToTitleCase(
-      Services.DEBLUR
-    )}`,
-  },
-  {
-    id: 7,
     label: formatEnumToTitleCase(Services.HDR_ENHANCEMENT),
+    attachedLabel: formatEnumLowerString(Services.HDR_ENHANCEMENT),
     icon: Sun,
     href: formatEnumToPath(Services.HDR_ENHANCEMENT),
     enumValue: Services.HDR_ENHANCEMENT,
@@ -104,6 +97,19 @@ export const toolsServices = [
       Services.HDR_ENHANCEMENT
     )}`,
   },
+  // {
+  //   id: 6,
+  //   label: formatEnumToTitleCase(Services.DEBLUR),
+  //   icon: Aperture,
+  //   href: formatEnumToPath(Services.DEBLUR),
+  //   enumValue: Services.DEBLUR,
+  //   colorMenu: "text-teal-500",
+  //   colorService: "text-blue-800",
+  //   bgColorService: "bg-gradient-to-r from-cyan-400 to-blue-500",
+  //   dargAndDropTextService: `Drag your image here to start AI ${formatEnumToTitleCase(
+  //     Services.DEBLUR
+  //   )}`,
+  // },
   // {
   //   id: 8,
   //   label: formatEnumToTitleCase(Services.BOKEH_EFFECT),

@@ -26,7 +26,7 @@ export const PremiumConfirmation = () => {
           <span className="text-lg font-semibold uppercase text-gray-600">
             Vos Avantages Premium :
           </span>
-          <div className="grid grid-cols-7 gap-4 px-1 py-4">
+          <div className="grid grid-cols-6 gap-4 px-1 py-4">
             {toolsServices.map((feature) => (
               <Link
                 key={feature.id}

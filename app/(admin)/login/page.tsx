@@ -7,7 +7,6 @@ export default async function LoginPage() {
   if (!session) {
     return (
       <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-900 pt-20">
-        {/* Arrière-plan avec des objets flous pour un thème IA subtil */}
         <div className="absolute inset-0 -z-10 opacity-40">
           <div className="absolute left-1/4 top-1/4 size-[300px] rounded-full bg-blue-500 opacity-20 blur-2xl"></div>
           <div className="absolute right-1/3 top-1/2 size-[200px] rounded-full bg-cyan-400 opacity-30 blur-3xl"></div>

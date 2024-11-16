@@ -1,13 +1,16 @@
 "use client";
 
 import { LoaderEffect } from "@/features/loader/LoaderEffect";
+import { ErrorList } from "@/lib/errorList";
 import { formatEnumLowerString } from "@/lib/formatEnumLowerString";
 import { getImageDimensions } from "@/lib/getImageDimension";
+import { useFreeCountStore } from "@/store/count.store";
 import { useFileStore } from "@/store/file.store";
 import { Services } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
-import { useRouter } from "next/navigation";
+import axios, { AxiosError } from "axios";
+import { AlertTriangle } from "lucide-react";
+import { redirect, useRouter } from "next/navigation";
 import { useCallback } from "react";
 import { FileError, FileRejection, useDropzone } from "react-dropzone";
 import { toast } from "react-hot-toast";
@@ -31,6 +34,13 @@ export const ManageDropZone = ({
   );
   const setFileType = useFileStore(useShallow((state) => state.setFileType));
 
+  const setFreeCount = useFreeCountStore(
+    useShallow((state) => state.setFreeCount)
+  );
+  const updateAvailableCount = useFreeCountStore(
+    useShallow((state) => state.updateAvailableCount)
+  );
+
   const { isPending: isPendingReplicate, mutate: processRelicateUlr } =
     useMutation({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,15 +49,16 @@ export const ManageDropZone = ({
           const result = await axios.post("/api/replicateprocess", {
             processId: slug,
           });
-
+          updateAvailableCount(true);
+          setFreeCount();
           const responseData = result.data;
           toast.success(`File Optimized successfully`);
           router.push(`/${service}/${responseData.slug}`);
           //return result.data; // Retourne les données de la requête
         } catch (err) {
-          const error = err as Error;
-          toast.error(`Error uploading file: ${error.message}`);
-          throw err; // Propagation de l'erreur pour que React Query la prenne en compte
+          const error = err as AxiosError;
+          //toast.error(`Error uploading file: ${error.message}`);
+          throw error; // Propagation de l'erreur pour que React Query la prenne en compte
         }
       },
     });
@@ -55,17 +66,54 @@ export const ManageDropZone = ({
   const { mutate: updateFile } = useMutation({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mutationFn: async (data: any) => {
-      await axios
-        .post("/api/uploadprocess", data)
-        .then((res) => {
-          const { slug } = res?.data;
-          console.log("res.data/Slug ::: ", slug);
-          toast.success(`File uploaded successfully`);
-          processRelicateUlr(slug); // Appel de la mutation pour relire le fichier
-        })
-        .catch((err) => {
-          toast.error(`Error uploading file: ${err.message}`);
-        });
+      try {
+        const result = await axios.post("/api/uploadprocess", data);
+        const { slug } = result.data;
+        console.log("res.data/Slug ::: ", slug);
+        toast.success(`File uploaded successfully`);
+        processRelicateUlr(slug); // Appel de la mutation pour relire le fichier
+      } catch (err) {
+        const error = err as AxiosError;
+        if (error.response?.data === ErrorList.FREE_TRIAL_HAS_EXPIRED) {
+          toast.custom(
+            (t) => (
+              <div
+                className={`${
+                  t.visible ? "animate-enter" : "animate-leave"
+                } flex w-full max-w-md items-center rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5`}
+              >
+                <div className="flex items-center p-4">
+                  <AlertTriangle className="size-6 text-red-500" />
+                  <div className="ml-3">
+                    <p className="text-sm font-semibold text-gray-900">
+                      Your Free Trial has expired !
+                    </p>
+                    <p className="mt-1 text-sm text-gray-500">
+                      Go back to the payment page to complete your order and
+                      enjoy our services!
+                    </p>
+                  </div>
+                </div>
+                <div className="flex border-l border-gray-200">
+                  <button
+                    onClick={() => {
+                      toast.dismiss(t.id);
+                      redirect("/payments");
+                    }}
+                    className="mx-2 w-full rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-500/50 hover:text-slate-800"
+                  >
+                    Go to Payments
+                  </button>
+                </div>
+              </div>
+            ),
+            {
+              duration: 10000,
+            }
+          );
+        }
+        throw error;
+      }
     },
   });
 

@@ -1,15 +1,15 @@
 import { baseAuth } from "@/auth/auth";
 import { prisma } from "@/auth/prisma";
-import { checkApiLimit } from "@/lib/api-limit";
+import { MAX_FREE_COUNTS } from "@/constants";
+import { ErrorList } from "@/lib/errorList";
 import { toolsServices } from "@/lib/toolsList";
-import { Services } from "@prisma/client";
+import { Plan, Services, User } from "@prisma/client";
 import { put } from "@vercel/blob";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
     const session = await baseAuth();
-    const { user } = session!;
 
     const formData = await request.formData();
     const file = formData.get("file") as File;
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
     const height = formData.get("height");
     const service = formData.get("service");
 
-    if (!session || !user) {
+    if (!session) {
       return new NextResponse("Unauthorised", { status: 401 });
     }
 
@@ -26,10 +26,35 @@ export async function POST(request: Request) {
         status: 400,
       });
     }
-    const freeTrial = await checkApiLimit();
-    if (!freeTrial) {
-      return new NextResponse("Free trial has expired.", { status: 403 });
+
+    const user = session.user as User;
+
+    //const freeTrial = await checkApiLimit();
+    const userApiLimit = await prisma.userApiLimit.findUnique({
+      where: {
+        userId: user.id,
+      },
+    });
+
+    if (!userApiLimit) {
+      return new NextResponse(ErrorList.API_LIMIT_NOT_EXIST, { status: 403 });
     }
+
+    if (
+      !(
+        (userApiLimit.count < MAX_FREE_COUNTS && user.plan === Plan.FREE) ||
+        (userApiLimit.count < MAX_FREE_COUNTS && user.plan === Plan.PREMIUM) ||
+        user.plan === Plan.PREMIUM
+      )
+    ) {
+      return new NextResponse(ErrorList.FREE_TRIAL_HAS_EXPIRED, {
+        status: 403,
+      });
+    }
+    // const freeTrial = await checkApiLimit();
+    // if (!freeTrial) {
+    //   return new NextResponse("Free trial has expired.", { status: 403 });
+    // }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const isServicePathName = (list: any) => list.href === "/" + service;
@@ -50,6 +75,14 @@ export async function POST(request: Request) {
         user: { connect: { id: user.id } },
       },
     });
+
+    // ADD CREDIT TO USER
+    await prisma.userApiLimit.update({
+      where: { userId: user.id },
+      data: { count: userApiLimit.count + 1 },
+    });
+    console.log("ADD CREDIT TO USER");
+
     return NextResponse.json(replicate, {
       status: 200,
     });

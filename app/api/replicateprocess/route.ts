@@ -1,8 +1,8 @@
 import { baseAuth } from "@/auth/auth";
 import { prisma } from "@/auth/prisma";
 import { env } from "@/env";
-import { checkApiLimit, increaseApiLimit } from "@/lib/api-limit";
 import { chooseReplicateConfig } from "@/lib/chooseReplicateConfig";
+import { ErrorList } from "@/lib/errorList";
 import { formatEnumToTitleCase } from "@/lib/formatEnumToTitleCase";
 import { Services, User } from "@prisma/client";
 import { put } from "@vercel/blob";
@@ -63,11 +63,6 @@ export async function POST(req: Request) {
       return new NextResponse("Unauthorised", { status: 401 });
     }
 
-    const freeTrial = await checkApiLimit();
-    if (!freeTrial) {
-      return new NextResponse("Free trial has expired.", { status: 403 });
-    }
-
     const user = session.user as User;
 
     const findReplicateToProcess = await prisma.replicate.findUnique({
@@ -77,8 +72,12 @@ export async function POST(req: Request) {
       },
     });
 
+    console.log("FIND UNIQUE USER ::: ", findReplicateToProcess);
+
     if (!findReplicateToProcess) {
-      return new NextResponse("Process not found", { status: 404 });
+      return new NextResponse(ErrorList.REPLICATE_PROCESS_NOT_FOUND, {
+        status: 404,
+      });
     }
 
     const process = await chooseReplicateConfig(
@@ -89,10 +88,11 @@ export async function POST(req: Request) {
     const model = await chooseModel(findReplicateToProcess.serviceName);
 
     if (findReplicateToProcess.replicateOptimized === null) {
+      console.log("RUNNING REPLICATE");
       const output = await replicate.run(model, {
         input: process.input,
       });
-      await increaseApiLimit();
+
       //Télécharger l'image à partir de l'URL output
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const imageResponse = await axios.get(output as any, {
