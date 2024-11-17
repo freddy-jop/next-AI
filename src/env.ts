@@ -8,6 +8,7 @@ export const env = createEnv({
     REPLICATE_API_TOKEN: z.string(),
     STRIPE_SECRET_KEY: z.string(),
     STRIPE_PRICE_9: z.string(),
+    STRIPE_PRICE_PROD_9: z.string(),
     STRIPE_WEBHOOK_SECRET: z.string(),
   },
   client: {},

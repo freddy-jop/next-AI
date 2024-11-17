@@ -33,7 +33,10 @@ export async function GET() {
       mode: "subscription",
       line_items: [
         {
-          price: env.NODE_ENV === "development" ? env.STRIPE_PRICE_9 : "",
+          price:
+            env.NODE_ENV === "development"
+              ? env.STRIPE_PRICE_9
+              : env.STRIPE_PRICE_PROD_9,
           quantity: 1,
         },
       ],
