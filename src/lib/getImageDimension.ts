@@ -1,4 +1,7 @@
-import { Dimensions } from "@/store/file.store";
+type Dimensions = {
+  width: number;
+  height: number;
+};
 
 export const getImageDimensions = (src: string): Promise<Dimensions> => {
   return new Promise((resolve, reject) => {
