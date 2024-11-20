@@ -10,7 +10,7 @@ export default async function RoutePage() {
   }
   const user = session.user as User;
   if (user.plan === Plan.FREE) {
-    redirect("/payments");
+    redirect("/pricing");
   }
   return <PremiumConfirmation />;
 }

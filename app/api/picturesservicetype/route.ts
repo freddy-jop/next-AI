@@ -28,9 +28,9 @@ export async function GET(request: Request) {
       where: {
         serviceName: Services[serviceType as keyof typeof Services],
         userId: user.id,
-        replicateOptimized: {
-          not: null,
-        },
+      },
+      orderBy: {
+        createdAt: "desc", // Sort by the createdAt field in descending order
       },
     });
 

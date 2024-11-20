@@ -14,6 +14,7 @@ export const LoginUser = () => {
     <Card className="mx-auto flex w-full max-w-md flex-col items-center rounded-xl bg-white/90 shadow-lg transition-transform hover:scale-105">
       <CardHeader className="pt-6 text-center">
         <Image
+          priority
           src="/images/logo_opti_pix.svg"
           alt="Optima Pix logo"
           width={290}

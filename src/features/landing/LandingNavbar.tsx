@@ -102,28 +102,5 @@ export const LandingNavbar = () => {
         </Link>
       </motion.div>
     </motion.nav>
-    //   <nav className="fixed inset-x-0 top-0 z-10 flex items-center justify-between bg-white/10 p-8 shadow-md backdrop-blur-lg">
-    //     <Link href="/" className="flex items-center gap-2">
-    //       <div className="relative mr-4">
-    //         <Image
-    //           src="/images/logo_opti_pix.svg"
-    //           alt="Optima Pix"
-    //           width={180}
-    //           height={50}
-    //         />
-    //       </div>
-    //     </Link>
-    //     <div className="flex items-center gap-2">
-    //       <Link href="/login" className="gap-2">
-    //         <Button
-    //           size="xl"
-    //           variant="premium"
-    //           className="rounded-full bg-gradient-to-r from-cyan-500 to-sky-400 px-6 py-3 font-semibold text-white"
-    //         >
-    //           Launch App
-    //         </Button>
-    //       </Link>
-    //     </div>
-    //   </nav>
   );
 };

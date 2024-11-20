@@ -34,8 +34,8 @@ export async function GET(request: Request) {
     if (!optimizedReplicate) {
       return new NextResponse("Process not found", { status: 404 });
     }
-
-    return NextResponse.json(optimizedReplicate);
+    console.log("optimizedReplicate/undefined ::::: ", optimizedReplicate);
+    return NextResponse.json(optimizedReplicate, { status: 200 });
   } catch (error) {
     console.log(error);
     return new NextResponse("Internal error", { status: 500 });

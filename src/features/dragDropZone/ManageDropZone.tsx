@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/migration-from-tailwind-2 */
 "use client";
 
 import { LoaderEffect } from "@/features/loader/LoaderEffect";
@@ -5,12 +6,12 @@ import { ErrorList } from "@/lib/errorList";
 import { formatEnumLowerString } from "@/lib/formatEnumLowerString";
 import { getImageDimensions } from "@/lib/getImageDimension";
 import { useFreeCountStore } from "@/store/count.store";
-import { useFileStore } from "@/store/file.store";
+import { useReplicateStore } from "@/store/replicate.store";
 import { Services } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { AlertTriangle } from "lucide-react";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { useCallback } from "react";
 import { FileError, FileRejection, useDropzone } from "react-dropzone";
 import { toast } from "react-hot-toast";
@@ -26,13 +27,17 @@ export const ManageDropZone = ({
 }: {
   serviceName: keyof typeof Services;
 }) => {
-  const service = formatEnumLowerString(serviceName);
-  const router = useRouter();
-  const setFile = useFileStore(useShallow((state) => state.setFile));
-  const setFileDimension = useFileStore(
-    useShallow((state) => state.setFileDimension)
+  const setReplicateList = useReplicateStore(
+    useShallow((state) => state.setReplicateList)
   );
-  const setFileType = useFileStore(useShallow((state) => state.setFileType));
+  const setIfDropZoneActive = useReplicateStore(
+    useShallow((state) => state.setIfDropZoneActive)
+  );
+  const ifDropZoneActive = useReplicateStore(
+    useShallow((state) => state.ifDropZoneActive)
+  );
+
+  const service = formatEnumLowerString(serviceName);
 
   const setFreeCount = useFreeCountStore(
     useShallow((state) => state.setFreeCount)
@@ -49,15 +54,43 @@ export const ManageDropZone = ({
           const result = await axios.post("/api/replicateprocess", {
             processId: slug,
           });
+
           updateAvailableCount(true);
           setFreeCount();
+
           const responseData = result.data;
-          toast.success(`File Optimized successfully`);
-          router.push(`/${service}/${responseData.slug}`);
-          //return result.data; // Retourne les données de la requête
+          const dataPublished = [];
+          dataPublished.push(responseData);
+
+          setReplicateList(dataPublished);
+          toast.success(
+            `File optimization is IN PROGRESS and will be ready in a few seconds or minutes`
+          );
+          toast.custom(
+            () => (
+              <div
+                className={`flex w-full max-w-md items-center rounded-lg bg-white shadow-md ring-4 ring-black ring-opacity-25`}
+              >
+                <div className="flex items-center p-4">
+                  <AlertTriangle className="size-6 text-red-500" />
+                  <div className="ml-3">
+                    <p className="text-sm font-semibold text-gray-900">
+                      If you are still on this page you will be redirected{" "}
+                      <span className="italic underline">automatically</span>,
+                      once your optimization is
+                      <span className="italic underline">available</span>.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ),
+            {
+              duration: 10000,
+            }
+          );
+          return result.data; // Retourne les données de la requête
         } catch (err) {
           const error = err as AxiosError;
-          //toast.error(`Error uploading file: ${error.message}`);
           throw error; // Propagation de l'erreur pour que React Query la prenne en compte
         }
       },
@@ -69,8 +102,8 @@ export const ManageDropZone = ({
       try {
         const result = await axios.post("/api/uploadprocess", data);
         const { slug } = result.data;
-        console.log("res.data/Slug ::: ", slug);
-        toast.success(`File uploaded successfully`);
+        toast.success(`File uploaded successfully with ID: ${slug}`);
+        setIfDropZoneActive(true);
         processRelicateUlr(slug); // Appel de la mutation pour relire le fichier
       } catch (err) {
         const error = err as AxiosError;
@@ -78,9 +111,7 @@ export const ManageDropZone = ({
           toast.custom(
             (t) => (
               <div
-                className={`${
-                  t.visible ? "animate-enter" : "animate-leave"
-                } flex w-full max-w-md items-center rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5`}
+                className={`flex w-full max-w-md items-center rounded-lg bg-white shadow-md ring-4 ring-black ring-opacity-25`}
               >
                 <div className="flex items-center p-4">
                   <AlertTriangle className="size-6 text-red-500" />
@@ -98,7 +129,7 @@ export const ManageDropZone = ({
                   <button
                     onClick={() => {
                       toast.dismiss(t.id);
-                      redirect("/payments");
+                      redirect("/pricing");
                     }}
                     className="mx-2 w-full rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-500/50 hover:text-slate-800"
                   >
@@ -180,12 +211,12 @@ export const ManageDropZone = ({
 
       const file = acceptedFiles[0];
 
-      const fileType = file.type.split("/");
-      setFileType(fileType[1]);
+      //const fileType = file.type.split("/");
+      //setFileType(fileType[1]);
       const url = URL.createObjectURL(file);
-      setFile(url);
+      //setFile(url);
       const dimensions = await getImageDimensions(url);
-      setFileDimension(dimensions);
+      //setFileDimension(dimensions);
 
       const formData = new FormData();
       formData.append("file", file); // Ajoute le fichier directement
@@ -195,7 +226,7 @@ export const ManageDropZone = ({
 
       updateFile(formData);
     },
-    [setFileType, setFile, setFileDimension, service, updateFile]
+    [service, updateFile]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -212,7 +243,7 @@ export const ManageDropZone = ({
     validator: validateFile,
   });
 
-  if (isPendingReplicate) {
+  if (isPendingReplicate || ifDropZoneActive) {
     return <LoaderEffect />;
   }
 

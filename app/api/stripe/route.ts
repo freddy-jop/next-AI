@@ -29,7 +29,7 @@ export async function GET() {
       customer: stripCustomer,
       success_url: `${getServerUrl()}/success`,
       cancel_url: `${getServerUrl()}/success`,
-      payment_method_types: ["card", "link", "paypal"],
+      payment_method_types: ["card"],
       mode: "subscription",
       line_items: [
         {

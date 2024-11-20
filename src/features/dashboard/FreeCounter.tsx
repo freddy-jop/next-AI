@@ -77,7 +77,7 @@ export const FreeCounter = ({ user }: FreeCounterProps) => {
         } items-center space-x-1 rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 px-4 py-1 text-sm font-semibold text-white shadow-lg shadow-indigo-500/50`}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        onClick={() => redirect("/payments")}
+        onClick={() => redirect("/pricing")}
       >
         <span>Upgrade</span>
         <Zap className="size-4 fill-yellow-300 text-yellow-300 hover:animate-pulse" />{" "}

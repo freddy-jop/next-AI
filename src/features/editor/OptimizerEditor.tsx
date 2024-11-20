@@ -48,7 +48,7 @@ export const OpimizerEditor = ({
             imageUrl={replicateData.replicateOptimized!}
             width={Number(replicateData.width)}
             height={Number(replicateData.height)}
-            watermarkText="Optipix"
+            watermarkText="OptiPix AI"
             ifWatermark={true}
           />
           <div

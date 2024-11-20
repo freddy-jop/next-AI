@@ -32,7 +32,6 @@ export async function POST(request: Request) {
 
     const user = session.user as User;
 
-    //const freeTrial = await checkApiLimit();
     const userApiLimit = await prisma.userApiLimit.findUnique({
       where: {
         userId: user.id,
@@ -54,10 +53,6 @@ export async function POST(request: Request) {
         status: 403,
       });
     }
-    // const freeTrial = await checkApiLimit();
-    // if (!freeTrial) {
-    //   return new NextResponse("Free trial has expired.", { status: 403 });
-    // }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const isServicePathName = (list: any) => list.href === "/" + service;
@@ -78,13 +73,6 @@ export async function POST(request: Request) {
         user: { connect: { id: user.id } },
       },
     });
-
-    // ADD CREDIT TO USER
-    await prisma.userApiLimit.update({
-      where: { userId: user.id },
-      data: { count: userApiLimit.count + 1 },
-    });
-    console.log("ADD CREDIT TO USER");
 
     return NextResponse.json(replicate, {
       status: 200,

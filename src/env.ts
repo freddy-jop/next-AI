@@ -10,6 +10,7 @@ export const env = createEnv({
     STRIPE_PRICE_9: z.string(),
     STRIPE_PRICE_PROD_9: z.string(),
     STRIPE_WEBHOOK_SECRET: z.string(),
+    AWS_LAMBDA_END_POINT_OPTIMIZER: z.string(),
   },
   client: {},
   experimental__runtimeEnv: {

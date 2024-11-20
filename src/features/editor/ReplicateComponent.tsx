@@ -11,9 +11,7 @@ import toast from "react-hot-toast";
 
 export const ReplicateComponent = ({ processId }: { processId: string }) => {
   const { data, isPending } = useQuery({
-    queryKey: ["replicateData", processId],
-    enabled: !!processId,
-    refetchOnWindowFocus: false,
+    queryKey: ["currentReplicateData", processId],
     queryFn: async () => {
       try {
         const result = await axios.get("/api/replicateoptimized", {
@@ -21,7 +19,6 @@ export const ReplicateComponent = ({ processId }: { processId: string }) => {
             processId: processId,
           },
         });
-        toast.success(`YOUR PICTURE IS AVAILABLE !!!`);
         return result.data; // Retourne les données de la requête
       } catch (err) {
         const error = err as Error;

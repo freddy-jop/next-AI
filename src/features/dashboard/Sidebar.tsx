@@ -25,6 +25,7 @@ export const Sidebar = ({ user }: SidebarProps) => {
         <Link href={"/dashboard"} className="mb-7 flex items-center pl-3">
           <div className="relative mr-4">
             <Image
+              priority
               src="/images/logo_opti_pix.svg"
               alt="optima pix"
               width={290}
