@@ -8,7 +8,7 @@ export const SignInButtonGoogle = () => {
     <Button
       size="lg"
       variant="ghost"
-      className="w-full rounded-full bg-red-600 py-3 text-white shadow-md transition duration-300 ease-in-out hover:bg-red-700"
+      className="w-full rounded-full bg-red-600 py-3 font-semibold text-white shadow-md transition duration-300 ease-in-out hover:bg-red-700"
       onClick={() => {
         singInActionWitGoogle();
       }}
