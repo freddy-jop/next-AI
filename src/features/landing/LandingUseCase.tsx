@@ -30,14 +30,14 @@ export const LandingUseCase = () => {
             exit={{ x: "-100%", opacity: 0 }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
             //className="text-xl font-medium text-white md:text-2xl lg:text-3xl"
-            className="mt-6 text-center text-3xl font-bold text-cyan-500 md:text-4xl"
+            className="mt-6 text-center text-2xl font-bold text-cyan-500 md:text-4xl"
           >
             <Card
               className="flex items-center justify-between rounded-lg border-black/5 
                         bg-gradient-to-r from-gray-50 to-gray-200 p-4 
                         transition-shadow hover:shadow-lg"
             >
-              <div className="flex w-[400px] items-center justify-center gap-x-4 md:w-[500px]">
+              <div className="flex w-[300px] items-center justify-center gap-x-4 md:w-[500px]">
                 <div
                   className={cn(
                     "p-2 w-fit rounded-md shadow-lg shadow-indigo-500/50",
@@ -61,7 +61,7 @@ export const LandingUseCase = () => {
         </AnimatePresence>
       </div>
       {/* Image en pleine largeur avec effet de flou en arrière-plan */}
-      <div className="relative h-80 w-full overflow-hidden md:h-96 lg:h-[500px]">
+      <div className="relative h-72 w-96 overflow-hidden md:h-96 md:w-full lg:h-[500px]">
         {/* <div className="absolute inset-0 z-0 rounded-lg bg-black/50 backdrop-blur-lg"></div> */}
         {/* <div className="absolute inset-0 z-0 rounded-lg bg-black/50 backdrop-blur-lg"></div> */}
         <AnimatePresence mode="wait">

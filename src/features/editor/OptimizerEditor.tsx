@@ -16,33 +16,46 @@ export const OpimizerEditor = ({
 
   if (!replicateData.replicateOptimized) return;
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (!isDragging) return;
-
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
-    const percent = Math.max(0, Math.min((x / rect.width) * 100, 100));
-    setSliderPosition(percent);
+  const updateSliderPosition = (x: number, rect: DOMRect) => {
+    const position = Math.max(0, Math.min(x - rect.left, rect.width));
+    const percent = (position / rect.width) * 100;
+    setSliderPosition(Math.max(0, Math.min(percent, 100)));
   };
 
-  const handleMouseDown = () => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    updateSliderPosition(e.clientX, rect);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const touch = e.touches[0];
+    updateSliderPosition(touch.clientX, rect);
+  };
+
+  const handleStartDrag = () => {
     setIsDragging(true);
   };
 
-  const handleMouseUp = () => {
+  const handleEndDrag = () => {
     setIsDragging(false);
   };
 
   return (
     <div
       className="mx-5 mt-4 flex items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-sky-100 via-white to-sky-50 p-6 shadow-lg"
-      onMouseUp={handleMouseUp}
+      onMouseUp={handleEndDrag}
+      onTouchEnd={handleEndDrag}
     >
       <div className="relative mx-auto h-[calc(100vh-150px)] max-h-[calc(70%-10px)] w-full rounded-lg border border-gray-200 p-10">
         <div
           className="relative m-auto size-full select-none overflow-hidden"
           onMouseMove={handleMouseMove}
-          onMouseDown={handleMouseDown}
+          onMouseDown={handleStartDrag}
+          onTouchMove={handleTouchMove}
+          onTouchStart={handleStartDrag}
         >
           <CanvasImageWithWatermark
             imageUrl={replicateData.replicateOptimized!}

@@ -26,10 +26,10 @@ export const Sidebar = ({ user }: SidebarProps) => {
           <div className="relative mr-4">
             <Image
               priority
-              src="/images/logo_opti_pix.svg"
-              alt="optima pix"
-              width={290}
-              height={80}
+              src="/images/logo_opti_pix_AI.png"
+              alt="OptiPixAI"
+              width={250}
+              height={67}
             />
           </div>
         </Link>
@@ -57,7 +57,9 @@ export const Sidebar = ({ user }: SidebarProps) => {
           ))}
         </div>
       </div>
-      {user.plan === Plan.FREE && <FreeCounter user={user} />}
+      <div className="m-1 pb-10">
+        {user.plan === Plan.FREE && <FreeCounter user={user} />}
+      </div>
     </div>
   );
 };

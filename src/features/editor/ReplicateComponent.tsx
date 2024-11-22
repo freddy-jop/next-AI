@@ -22,7 +22,7 @@ export const ReplicateComponent = ({ processId }: { processId: string }) => {
         return result.data; // Retourne les données de la requête
       } catch (err) {
         const error = err as Error;
-        toast.error(`Error uploading file: ${error.message}`);
+        toast.error(`Error retraving data: ${error.message}`);
         throw err; // Propagation de l'erreur pour que React Query la prenne en compte
       }
     },
@@ -35,7 +35,7 @@ export const ReplicateComponent = ({ processId }: { processId: string }) => {
   return (
     <div>
       {/* <div className="flex flex-col items-center justify-center"> */}
-      <div className="mx-5 flex items-start space-x-4 rounded-lg bg-gray-100 p-4 sm:mx-5 md:mx-0 lg:mx-0 xl:mx-0 2xl:mx-0">
+      <div className="mx-5 flex items-start gap-1 space-x-4 rounded-lg bg-gray-100 p-4 sm:mx-5 sm:gap-0 md:mx-0 lg:mx-0 xl:mx-0 2xl:mx-0">
         <BackButton />
         <NewButton />
         <DownloadButtonOptimizer replicateData={data} />

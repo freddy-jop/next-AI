@@ -76,10 +76,11 @@ export const LandingNavbar = () => {
           }}
         >
           <Image
-            src="/images/logo_opti_pix.svg"
-            alt="Optima Pix"
-            width={180}
-            height={50}
+            priority
+            src="/images/logo_opti_pix_AI.png"
+            alt="OptiPixAI"
+            width={250}
+            height={67}
           />
         </motion.div>
       </Link>
@@ -95,7 +96,7 @@ export const LandingNavbar = () => {
           <Button
             size="xl"
             variant="premium"
-            className="rounded-full bg-gradient-to-r from-cyan-500 to-sky-400 px-6 py-3 font-semibold text-white"
+            className="rounded-full bg-gradient-to-r from-cyan-500 to-sky-400 px-4 py-1 font-semibold text-white md:px-6 md:py-3"
           >
             Launch App
           </Button>

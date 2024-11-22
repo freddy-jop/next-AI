@@ -15,11 +15,11 @@ export const ListTools = () => {
   return (
     <div className="py-14">
       <div className="space-y-4 py-10">
-        <h2 className="text-center text-2xl font-bold md:text-4xl">
-          Sublimez avec Facilité et Simplicité.
+        <h2 className="text-center text-xl font-bold md:text-4xl">
+          Elevate with Ease and Simplicity.
         </h2>
         <p className="text-center text-sm font-light text-muted-foreground md:text-lg">
-          Optimisez et sublimez vos créations grâce à l&apos;IA
+          Enhance and Optimize Your Creations with AI.
         </p>
       </div>
       {/* sm:grid-cols-1 md:grid-cols-1 md:px-20 lg:grid-cols-2 lg:px-32

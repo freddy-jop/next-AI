@@ -61,8 +61,8 @@ export const DownloadButtonOptimizer = ({
         className="rounded-full bg-gradient-to-r from-cyan-500 to-sky-400 font-bold text-white transition-colors duration-200 hover:opacity-80"
         onClick={handleDownload}
       >
-        <DownloadCloud className="mr-2 size-5"></DownloadCloud>
-        <span className="text-center text-sm font-bold text-white">
+        <DownloadCloud className="size-5 sm:mr-2 sm:size-5" />
+        <span className="hidden text-center text-sm font-bold text-white sm:inline">
           Download
         </span>
       </Button>

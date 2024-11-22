@@ -15,10 +15,10 @@ export const LoginUser = () => {
       <CardHeader className="pt-6 text-center">
         <Image
           priority
-          src="/images/logo_opti_pix.svg"
-          alt="Optima Pix logo"
-          width={290}
-          height={80}
+          src="/images/logo_opti_pix_AI.png"
+          alt="OptiPixAI"
+          width={250}
+          height={67}
           className="drop-shadow-lg"
         />
         <h1 className="mt-4 text-xl font-semibold text-gray-800">

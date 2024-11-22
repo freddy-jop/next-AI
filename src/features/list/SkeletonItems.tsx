@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton"; // Import correct du Skelet
 
 export const SkeletonItems = () => {
   return (
-    <div className="grid gap-6 py-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-6 py-6 sm:grid-cols-2 sm:px-10 md:grid-cols-2 md:px-10 lg:grid-cols-3 xl:grid-cols-3">
       {[...Array(3)].map((_, index) => (
         <div
           key={index}

@@ -13,7 +13,7 @@ export const {
 } = NextAuth({
   adapter: PrismaAdapter(prisma),
   theme: {
-    logo: "/images/logo_optima_pixel.svg",
+    logo: "/images/logo_opti_pix_AI.png",
   },
   providers: [GithubProvider, GoogleProvider],
   events: {

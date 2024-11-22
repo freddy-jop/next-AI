@@ -93,7 +93,9 @@ const Item = (props: PropsWithChildren<Replicate>) => {
   });
   return (
     <Link
-      className={props.replicateOptimized === null ? "pointer-events-none" : ""}
+      className={`${
+        props.replicateOptimized === null ? "pointer-events-none" : ""
+      }`}
       aria-disabled={props.replicateOptimized === null}
       tabIndex={props.replicateOptimized === null ? -1 : undefined}
       href={`${formatEnumToPath(props.serviceName as keyof typeof Services)}/${

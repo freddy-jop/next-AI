@@ -1,3 +1,4 @@
+import { Footer } from "@/features/landing/Footer";
 import { RouteLayoutType } from "@/types/next";
 
 export default async function RouteLayout({ children }: RouteLayoutType) {
@@ -9,6 +10,7 @@ export default async function RouteLayout({ children }: RouteLayoutType) {
       >
         <div className="mx-auto size-full max-w-screen-xl">{children}</div>
       </div>
+      <Footer />
     </main>
   );
 }

@@ -49,7 +49,7 @@ export const DragContainer = ({ isDragActive, serviceName }: DropZoneType) => {
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center w-full py-8 sm:py-10 md:py-12 lg:py-16 xl:py-20 px-4",
+        "flex flex-col items-center justify-center w-72 sm:w-full py-8 sm:py-10 md:py-12 lg:py-16 xl:py-20 px-4",
         "rounded-lg border-2 border-dashed border-cyan-500 text-cyan-500 font-bold transition-colors duration-300 hover:bg-sky-50 hover:shadow-lg hover:shadow-cyan-500/50"
       )}
       onMouseEnter={handleMouseEnter}
