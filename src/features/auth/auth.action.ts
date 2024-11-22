@@ -12,3 +12,7 @@ export const singInActionWitGithub = async () => {
 export const singInActionWitGoogle = async () => {
   await signIn("google", { redirectTo: "/dashboard" });
 };
+
+export const singInActionWitDribbble = async () => {
+  await signIn("dribbble", { redirectTo: "/dashboard" });
+};

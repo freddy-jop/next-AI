@@ -1,27 +1,27 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { singInActionWitGithub } from "./auth.action";
+import { singInActionWitDribbble } from "./auth.action";
 
-export const SignInButtonGitHub = () => {
+export const SignInButtonDribbble = () => {
   return (
     <Button
       size="lg"
       variant="ghost"
-      className="w-full rounded-full bg-cyan-500 py-3 font-semibold text-white shadow-md transition duration-300 ease-in-out hover:bg-cyan-700"
+      className="w-full rounded-full bg-pink-500 py-3 font-semibold text-white shadow-md transition duration-300 ease-in-out hover:bg-pink-600"
       onClick={() => {
-        singInActionWitGithub();
+        singInActionWitDribbble();
       }}
     >
       <div className="flex items-center justify-center">
         <Image
-          src="/images/github.svg"
-          alt="GitHub icon"
+          src="/images/dribbble.svg"
+          alt="Dribble icon"
           width={24}
           height={24}
           className="mr-2"
         />
-        Sign in with GitHub
+        Sign in with Dribbble
       </div>
     </Button>
   );
