@@ -34,7 +34,6 @@ export async function GET(request: Request) {
     if (!optimizedReplicate) {
       return new NextResponse("Process not found", { status: 404 });
     }
-    console.log("optimizedReplicate/undefined ::::: ", optimizedReplicate);
     return NextResponse.json(optimizedReplicate, { status: 200 });
   } catch (error) {
     console.log(error);

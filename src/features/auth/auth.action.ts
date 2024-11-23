@@ -16,3 +16,7 @@ export const singInActionWitGoogle = async () => {
 export const singInActionWitTiktok = async () => {
   await signIn("tiktok", { redirectTo: "/dashboard" });
 };
+
+export const singInActionWitEmail = async (email: string) => {
+  await signIn("email", { email: email, redirect: false });
+};

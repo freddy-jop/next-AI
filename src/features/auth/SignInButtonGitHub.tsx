@@ -8,7 +8,7 @@ export const SignInButtonGitHub = () => {
     <Button
       size="lg"
       variant="ghost"
-      className="w-full rounded-full bg-cyan-500 py-3 font-semibold text-white shadow-md transition duration-300 ease-in-out hover:bg-cyan-700"
+      className="flex w-full items-center justify-center space-x-2 rounded-lg bg-cyan-600 px-4 py-3 font-semibold text-white shadow-lg transition hover:bg-cyan-700 focus:outline-none focus:ring-4 focus:ring-cyan-300"
       onClick={() => {
         singInActionWitGithub();
       }}

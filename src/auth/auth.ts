@@ -1,9 +1,10 @@
 import { prisma } from "@/auth/prisma";
+import { env } from "@/env";
 import { stripe } from "@/stripe";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
+import EmailProvider from "next-auth/providers/email";
 import GithubProvider from "next-auth/providers/github";
-import TikTokProvider from "next-auth/providers/tiktok";
 
 export const {
   handlers,
@@ -15,7 +16,20 @@ export const {
   theme: {
     logo: "/images/logo_opti_pix_AI.png",
   },
-  providers: [GithubProvider, TikTokProvider],
+  providers: [
+    GithubProvider,
+    EmailProvider({
+      server: {
+        host: env.EMAIL_SERVER_HOST,
+        port: parseInt(env.EMAIL_SERVER_PORT as string, 10),
+        auth: {
+          user: env.EMAIL_SERVER_USER,
+          pass: env.EMAIL_SERVER_PASSWORD,
+        },
+      },
+      from: env.EMAIL_FROM,
+    }),
+  ],
   events: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     createUser: async (message: any) => {

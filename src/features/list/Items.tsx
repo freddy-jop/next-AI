@@ -85,7 +85,6 @@ const Item = (props: PropsWithChildren<Replicate>) => {
         return result.data; // Retourne les données de la requête
       } catch (err) {
         const error = err as Error;
-        console.log("Item/refetch:::: ");
         toast.error(`Error uploading file: ${error.message}`);
         throw err; // Propagation de l'erreur pour que React Query la prenne en compte
       }

@@ -10,6 +10,7 @@ export default async function RouteLayout({ children }: RouteLayoutType) {
   if (!session || !session?.user) {
     redirect("/login");
   }
+
   const user = session.user as User;
   return (
     <div className="relative h-full">
