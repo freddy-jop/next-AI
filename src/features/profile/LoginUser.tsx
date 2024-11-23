@@ -26,8 +26,8 @@ export const LoginUser = () => {
       </CardHeader>
       <CardContent className="flex w-full flex-col items-center gap-4 py-8">
         <SignInButtonGitHub />
+        {/* <SignInButtonTiktok /> */}
         {/* <SignInButtonGoogle /> */}
-        {/* <SignInButtonDribbble /> */}
       </CardContent>
       <CardFooter className="pb-6">
         <Link href="/">

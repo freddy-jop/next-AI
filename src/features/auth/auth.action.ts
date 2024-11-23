@@ -13,6 +13,6 @@ export const singInActionWitGoogle = async () => {
   await signIn("google", { redirectTo: "/dashboard" });
 };
 
-export const singInActionWitDribbble = async () => {
-  await signIn("dribbble", { redirectTo: "/dashboard" });
+export const singInActionWitTiktok = async () => {
+  await signIn("tiktok", { redirectTo: "/dashboard" });
 };
