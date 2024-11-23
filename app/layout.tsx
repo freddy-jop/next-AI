@@ -24,6 +24,8 @@ export const metadata: Metadata = {
     icon: "/images/optipix_favicon.png",
   },
   applicationName: "OptiPix AI",
+  creator: "JOPHA Fredy",
+  authors: [{ name: "JOPHA Fredy", url: "https://optipixai.com" }],
 };
 
 export default function RootLayout({

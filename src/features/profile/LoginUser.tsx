@@ -6,7 +6,6 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
-import { SignInButtonDribbble } from "../auth/SignInButtonDribbble";
 import { SignInButtonGitHub } from "../auth/SignInButtonGitHub";
 import { SignInButtonGoogle } from "../auth/SignInButtonGoogle";
 
@@ -29,7 +28,7 @@ export const LoginUser = () => {
       <CardContent className="flex w-full flex-col items-center gap-4 py-8">
         <SignInButtonGitHub />
         <SignInButtonGoogle />
-        <SignInButtonDribbble />
+        {/* <SignInButtonDribbble /> */}
       </CardContent>
       <CardFooter className="pb-6">
         <Link href="/">
