@@ -3,7 +3,6 @@ import { stripe } from "@/stripe";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google";
 
 export const {
   handlers,
@@ -15,7 +14,7 @@ export const {
   theme: {
     logo: "/images/logo_opti_pix_AI.png",
   },
-  providers: [GithubProvider, GoogleProvider],
+  providers: [GithubProvider],
   events: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     createUser: async (message: any) => {

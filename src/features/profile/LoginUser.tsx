@@ -7,7 +7,6 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { SignInButtonGitHub } from "../auth/SignInButtonGitHub";
-import { SignInButtonGoogle } from "../auth/SignInButtonGoogle";
 
 export const LoginUser = () => {
   return (
@@ -27,7 +26,7 @@ export const LoginUser = () => {
       </CardHeader>
       <CardContent className="flex w-full flex-col items-center gap-4 py-8">
         <SignInButtonGitHub />
-        <SignInButtonGoogle />
+        {/* <SignInButtonGoogle /> */}
         {/* <SignInButtonDribbble /> */}
       </CardContent>
       <CardFooter className="pb-6">
