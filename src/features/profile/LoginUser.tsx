@@ -1,34 +1,36 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SignInButtonGitHub } from "../auth/SignInButtonGitHub";
+import { SignInButtonGoogle } from "../auth/SignInButtonGoogle";
 import { MagicLink } from "./MagicLink";
 
 export const LoginUser = () => {
   return (
     <div className="flex flex-col items-center text-center">
       {/* Header */}
-      <div className="mb-6">
+      <div className="mb-6 flex flex-col items-center">
         <Image
           priority
           src="/images/logo_opti_pix_AI.png"
           alt="OptiPixAI"
-          width={250}
-          height={67}
+          width={175}
+          height={46}
           className="drop-shadow-lg"
         />
-        <h1 className="mt-4 text-xl font-semibold text-gray-800">
-          Welcome to Optima Pix
+        <h1 className="mt-4 text-4xl font-normal text-cyan-700">
+          Welcome back
         </h1>
       </div>
 
       {/* Content */}
       <div className="w-full">
-        <SignInButtonGitHub />
+        <div className="flex flex-col gap-4">
+          <SignInButtonGitHub />
+          <SignInButtonGoogle />
+        </div>
         <div className="my-6 flex items-center">
           <div className="h-1 grow border-t border-dotted border-slate-700"></div>
-          <p className="mx-3 text-gray-400">
-            Or, sign in with <span className="underline">Magic Link</span>
-          </p>
+          <p className="mx-3 text-gray-800">Or, Sign in with Magic Link</p>
           <div className="h-1 grow border-t border-dotted border-slate-700"></div>
         </div>
         <MagicLink />

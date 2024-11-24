@@ -28,14 +28,14 @@ export const LandingHero = () => {
             loop={true}
             cursor
             cursorStyle="_"
-            typeSpeed={70}
-            deleteSpeed={50}
-            delaySpeed={1000}
+            typeSpeed={110}
+            deleteSpeed={90}
+            delaySpeed={1750}
           />
         </div>
       </div>
 
-      <div className="text-sm font-light text-zinc-200 md:text-xl">
+      <div className="text-[12px] font-light text-zinc-200 sm:text-sm md:text-xl">
         Enhance and elevate your creations with AI.
       </div>
 
@@ -43,7 +43,7 @@ export const LandingHero = () => {
         <Link href="/login">
           <Button
             variant="premium"
-            className="rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 p-4 font-semibold shadow-lg shadow-indigo-500/50 transition duration-300 ease-in-out hover:scale-105 md:p-6 md:text-lg"
+            className="rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 p-4 text-[12px] font-semibold shadow-lg shadow-indigo-500/50 transition duration-300 ease-in-out hover:scale-105 sm:text-sm md:p-6 md:text-lg"
           >
             Unlock Free AI-Enhanced Image Perfection
           </Button>

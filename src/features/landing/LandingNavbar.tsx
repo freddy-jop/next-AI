@@ -96,7 +96,7 @@ export const LandingNavbar = () => {
           <Button
             size="xl"
             variant="premium"
-            className="rounded-full bg-gradient-to-r from-cyan-500 to-sky-400 px-4 py-1 font-semibold text-white md:px-6 md:py-3"
+            className="rounded-full bg-gradient-to-r from-cyan-500 to-sky-400 px-4 py-1 text-[12px] font-semibold text-white sm:text-sm md:px-6 md:py-3 md:text-xl"
           >
             Launch App
           </Button>

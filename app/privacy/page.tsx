@@ -166,10 +166,10 @@ export default async function RoutePage() {
                 <li>
                   Email:{" "}
                   <a
-                    href="mailto:freddy.jopha.dev@gmail.com"
+                    href="support@optipixai.com"
                     className="text-blue-600 hover:text-blue-800"
                   >
-                    freddy.jopha.dev@gmail.com
+                    support@optipixai.com
                   </a>
                 </li>
               </ul>

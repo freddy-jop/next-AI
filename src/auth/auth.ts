@@ -5,6 +5,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 
 export const {
   handlers,
@@ -18,6 +19,7 @@ export const {
   },
   providers: [
     GithubProvider,
+    GoogleProvider,
     EmailProvider({
       server: {
         host: env.EMAIL_SERVER_HOST,

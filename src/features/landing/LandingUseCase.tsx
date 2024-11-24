@@ -61,7 +61,7 @@ export const LandingUseCase = () => {
         </AnimatePresence>
       </div>
       {/* Image en pleine largeur avec effet de flou en arrière-plan */}
-      <div className="relative h-72 w-96 overflow-hidden md:h-96 md:w-full lg:h-[500px]">
+      <div className="relative h-64 w-[300px] overflow-hidden sm:w-96 md:h-96 md:w-[730px] lg:h-[800px] lg:w-full">
         {/* <div className="absolute inset-0 z-0 rounded-lg bg-black/50 backdrop-blur-lg"></div> */}
         {/* <div className="absolute inset-0 z-0 rounded-lg bg-black/50 backdrop-blur-lg"></div> */}
         <AnimatePresence mode="wait">
@@ -82,7 +82,7 @@ export const LandingUseCase = () => {
                     src={`/images/${item.attachedLabel}.png`}
                     alt={item.label}
                     layout="fill"
-                    objectFit="cover"
+                    objectFit="contain"
                     // className="size-full rounded-lg border-8 border-white/20 object-contain"
                     className="rounded-lg border-4 border-white/20 shadow-xl"
                   />

@@ -18,5 +18,6 @@ export const singInActionWitTiktok = async () => {
 };
 
 export const singInActionWitEmail = async (email: string) => {
-  await signIn("email", { email: email, redirect: false });
+  const response = await signIn("email", { email: email, redirect: false });
+  return response;
 };
