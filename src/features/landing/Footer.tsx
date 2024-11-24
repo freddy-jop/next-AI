@@ -11,7 +11,7 @@ export const Footer = () => {
           href="/privacy"
           className="text-sm text-gray-400 transition-colors hover:text-white"
         >
-          <span className="underline">App Privacy Policy</span>
+          <span className="underline">Règles de confidentialité</span>
         </Link>
       </div>
 
