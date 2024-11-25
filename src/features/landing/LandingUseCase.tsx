@@ -21,7 +21,7 @@ export const LandingUseCase = () => {
 
   return (
     <div className="flex flex-col items-center space-y-8 py-20">
-      <div className="mb-8 flex w-full justify-center overflow-hidden">
+      <div className="flex w-full justify-center overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeIndex}
@@ -75,7 +75,7 @@ export const LandingUseCase = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 1.05 }}
                   transition={{ duration: 0.5 }}
-                  className="absolute inset-0 z-10"
+                  className="absolute inset-0"
                   //className="size-full object-contain"
                 >
                   <Image
@@ -84,7 +84,7 @@ export const LandingUseCase = () => {
                     layout="fill"
                     objectFit="contain"
                     // className="size-full rounded-lg border-8 border-white/20 object-contain"
-                    className="rounded-lg border-4 border-white/20 shadow-xl"
+                    className="rounded-lg shadow-xl"
                   />
                 </motion.div>
               )

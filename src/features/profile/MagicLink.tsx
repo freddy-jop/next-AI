@@ -79,7 +79,7 @@ export const MagicLink = () => {
               <FormItem className="w-full">
                 <FormDescription>
                   <span className="text-sm text-gray-500">
-                    Tape your mail, Validate and Check to your Email inbox
+                    Tape your mail, Validate and Check your Email inbox
                   </span>
                 </FormDescription>
                 <FormControl>
